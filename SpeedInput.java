@@ -3,17 +3,37 @@ import java.io.IOException;
 /**
  * Created by V on 22.03.2017.
  */
- class SpeedInput
-
+class SpeedInput
 {
-    private static int readIntNext(int num, int deciman) throws IOException {
+
+
+    private static byte nul=0;
+
+    private static byte setNulDec()
+    {
+        return SpeedInput.nul--;
+    }
+
+    private static byte setNul()
+    {
+        return ++SpeedInput.nul;
+    }
+
+    static void getNul() //debug
+    {
+        System.out.println(nul);
+    }
+
+    private static int readIntNext(int num, int decimal) throws IOException {
         int temp = System.in.read();
 
-        num*=deciman;
+        num*=decimal;
+        if (num==0)
+            setNul();
 
-        if (temp >= 47 && temp <= 58){
-            System.out.println("nul");
-            num = num+readIntNext(temp^0b110000, deciman*10);
+        if (temp >= 48 && temp <= 58){
+
+            num = num+readIntNext(temp^0b110000, decimal*10);
         }
         else
             return num;
@@ -21,10 +41,11 @@ import java.io.IOException;
     }
 
 
-    static int readInt() throws IOException {
+    protected static int readInt() throws IOException {
+
 
         int num = System.in.read();
-        while (num <= 47 && num <= 58 )
+        while (num <= 48 && num <= 58 )
         {
             num = System.in.read();
         }
@@ -33,7 +54,7 @@ import java.io.IOException;
 
         int temp = System.in.read();
         final int decimal = 10  ;
-        if (temp >= 47 && temp <= 58){
+        if (temp >= 48 && temp <= 58){
             num+= readIntNext(temp^0b110000, decimal );
             return revers(num);
         }
@@ -44,7 +65,18 @@ import java.io.IOException;
 
     private static  int revers (int n)
     {
-        return  recursionNext(n,0);
+
+        if  (SpeedInput.nul != 0 )
+        {
+            int temp = 1;
+            while (SpeedInput.nul !=0){
+                temp*=10;
+                setNulDec();
+            }
+            return recursionNext(n, 0)*temp;
+        }
+        else return recursionNext(n,0);
+
     }
 
     private static int recursionNext(int n, int i) {
