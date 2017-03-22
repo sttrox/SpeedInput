@@ -3,6 +3,7 @@ import java.io.IOException;
 /**
  * Created by V on 22.03.2017.
  */
+
 class SpeedInput
 {
 
@@ -45,7 +46,8 @@ class SpeedInput
 
 
         int num = System.in.read();
-        while (num <= 48 && num <= 58 )
+
+        while (num <= 47 && num <= 58 )
         {
             num = System.in.read();
         }
@@ -53,6 +55,8 @@ class SpeedInput
         num^= 0b110000;
 
         int temp = System.in.read();
+        if (num == 0 && temp == 0) return 0;
+
         final int decimal = 10  ;
         if (temp >= 48 && temp <= 58){
             num+= readIntNext(temp^0b110000, decimal );
@@ -66,6 +70,9 @@ class SpeedInput
     private static  int revers (int n)
     {
 
+        if (n == 0) {
+            return 0;
+        }
         if  (SpeedInput.nul != 0 )
         {
             int temp = 1;
@@ -83,4 +90,5 @@ class SpeedInput
         return (n==0) ?  i : recursionNext( n/10, i*10 + n%10 );
     }
 }
+
 
